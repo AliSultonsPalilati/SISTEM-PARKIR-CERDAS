@@ -82,21 +82,3 @@ Sistem diuji menggunakan data simulasi dan **Wireshark** untuk menganalisis:
 
 ---
 
-## 📂 Struktur Proyek
-
-```plaintext
-smart-parking-mqtt/
-│
-├── sensor-simulator/
-│   └── publish_sensor_data.py         # Simulasi sensor pengirim data ke broker MQTT
-│
-├── web-dashboard/
-│   └── app.js                         # Dashboard web realtime (subscriber MQTT)
-│
-├── security/
-│   └── tls_config.conf                # Konfigurasi TLS/SSL (jika menggunakan broker dengan enkripsi)
-│
-├── requirements.txt                   # Daftar pustaka Python yang digunakan
-└── README.md                          # Dokumentasi proyek
-
-
