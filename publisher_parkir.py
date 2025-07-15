@@ -8,7 +8,7 @@ import ssl
 # --- Konfigurasi ---
 ALAMAT_BROKER = "broker.hivemq.com"
 PORT_BROKER = 8883
-USER_MQTT = "parkir_user" 
+USER_MQTT = "Alisultn" 
 PASS_MQTT = "parkir123"  
 
 TOPIK_DASAR = "/parkirCerdas-Alisultn/lantai1"
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             
             print(f"[{datetime.now().strftime('%H:%M:%S')}] KIRIM ke '{topik_kirim}': {payload}")
             
-            time.sleep(random.uniform(1, 5)) # Kirim data setiap 1-3 detik
+            time.sleep(random.uniform(1, 3)) # dikirim setiap 1-3 detik
             
     except KeyboardInterrupt:
         print(f"\n[{datetime.now().strftime('%H:%M:%S')}] [PUBLISHER] Simulasi dihentikan.")
