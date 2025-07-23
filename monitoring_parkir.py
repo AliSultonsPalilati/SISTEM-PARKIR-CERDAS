@@ -28,7 +28,9 @@ app.secret_key = os.urandom(24)
 monitor_USER = "Alisultn"
 monitor_PASS = "admin123"
 
-def saat_terhubung(klien, data_pengguna, bendera, kode_hasil):
+# --- PERUBAHAN DI SINI ---
+# Tambahkan argumen 'properti=None' untuk menyesuaikan dengan paho-mqtt v2
+def saat_terhubung(klien, data_pengguna, bendera, kode_hasil, properti=None):
     if kode_hasil == 0:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] [MONITOR] Terhubung ke Broker MQTT!")
         klien.subscribe(TOPIK_LANGGANAN)
@@ -52,7 +54,8 @@ def saat_pesan_diterima(klien, data_pengguna, pesan):
             print(f"[{datetime.now().strftime('%H:%M:%S')}] [MQTT-WEB] Pesan tidak valid diterima.")
 
 def jalankan_klien_mqtt():
-    klien = mqtt.Client(client_id=f"monitor-web-{random.randint(100,999)}")
+    # Menggunakan paho-mqtt v2.0.0, tambahkan parameter 'callback_api_version'
+    klien = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=f"monitor-web-{random.randint(100,999)}")
     klien.on_connect = saat_terhubung
     klien.on_message = saat_pesan_diterima
     klien.username_pw_set(USER_MQTT, PASS_MQTT)
@@ -89,9 +92,7 @@ def index():
             "waktu_sekarang": datetime.now().strftime('%H:%M:%S')
         }
     
-    initial_data_json = json.dumps(initial_data)
-    
-    return render_template('index.html', initial_data_json=initial_data_json)
+    return render_template('index.html', initial_data=initial_data)
 
 @app.route('/data')
 def get_monitor_data():

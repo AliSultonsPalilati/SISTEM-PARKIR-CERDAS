@@ -51,7 +51,6 @@ if __name__ == "__main__":
 
     try:
         while True:
-            # Pilih slot secara acak untuk dikirim datanya
             slot_terpilih = random.choice(DAFTAR_SLOT_PARKIR)
             data_parkir = buat_data_parkir(slot_terpilih)
             

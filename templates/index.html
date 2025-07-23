@@ -81,10 +81,8 @@
     </div>
 
     <script>
-        // 1. Ambil data awal yang disisipkan oleh Flask.
-        const INITIAL_DATA = {{ initial_data_json | safe }};
+        const INITIAL_DATA = {{ initial_data | tojson | safe }};
 
-        // 2. Definisikan semua variabel dan fungsi.
         let statusChart;
 
         function initializeChart() {
@@ -104,7 +102,7 @@
 
         function updateParkingLot(slots) {
             const lotContainer = document.getElementById('parking-lot');
-            lotContainer.innerHTML = ''; 
+            lotContainer.innerHTML = '';
             if (Object.keys(slots).length === 0) {
                 lotContainer.innerHTML = '<p>Menunggu data dari sensor...</p>';
                 return;
@@ -125,7 +123,7 @@
                 statusChart.update('none');
             }
         }
-        
+
         function updateLog(logMessages) {
             const logContainer = document.getElementById('log-list');
             logContainer.innerHTML = '';
@@ -162,13 +160,16 @@
                 console.error("Error saat memperbarui dashboard:", error);
             }
         }
-        
-        // 3. Eksekusi kode. Tidak perlu 'window.onload'.
-        // Inisialisasi chart terlebih dahulu.
+
+
+        // ---- ALUR EKSEKUSI ----
+        // 1. Inisialisasi Chart
         initializeChart();
-        // Langsung tampilkan data awal yang sudah ada.
-        updateDashboard(INITIAL_DATA); 
-        // Mulai interval untuk mengambil pembaruan live.
+
+        // 2. Tampilkan data awal yang didapat dari server saat halaman dimuat
+        updateDashboard(INITIAL_DATA);
+
+        // 3. Mulai mengambil data baru dari server setiap 2 detik
         setInterval(fetchDashboardData, 2000);
 
     </script>
