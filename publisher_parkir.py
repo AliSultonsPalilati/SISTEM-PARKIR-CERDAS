@@ -5,7 +5,6 @@ import random
 from datetime import datetime
 import ssl
 
-# --- Konfigurasi ---
 ALAMAT_BROKER = "broker.hivemq.com"
 PORT_BROKER = 8883
 USER_MQTT = "Alisultn" 
@@ -13,7 +12,6 @@ PASS_MQTT = "parkir123"
 
 TOPIK_DASAR = "/parkirCerdas-Alisultn/lantai1"
 
-# Daftar slot parkir yang akan disimulasikan
 DAFTAR_SLOT_PARKIR = [f"A{i+1}" for i in range(5)] + [f"B{i+1}" for i in range(5)]
 status_slot_saat_ini = {slot: "KOSONG" for slot in DAFTAR_SLOT_PARKIR}
 
@@ -26,7 +24,6 @@ def saat_terhubung(klien, data_pengguna, bendera, kode_hasil):
 def buat_data_parkir(id_slot):
     global status_slot_saat_ini
     
-    # Peluang 30% untuk status berubah setiap siklus
     if random.random() < 0.3:
         status_slot_saat_ini[id_slot] = "TERISI" if status_slot_saat_ini[id_slot] == "KOSONG" else "KOSONG"
 
@@ -61,7 +58,7 @@ if __name__ == "__main__":
             
             print(f"[{datetime.now().strftime('%H:%M:%S')}] KIRIM ke '{topik_kirim}': {payload}")
             
-            time.sleep(random.uniform(1, 3)) # dikirim setiap 1-3 detik
+            time.sleep(random.uniform(1, 3)) 
             
     except KeyboardInterrupt:
         print(f"\n[{datetime.now().strftime('%H:%M:%S')}] [PUBLISHER] Simulasi dihentikan.")

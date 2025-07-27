@@ -8,28 +8,22 @@ import os
 from collections import deque
 import random 
 
-# --- Konfigurasi MQTT ---
 ALAMAT_BROKER = "broker.hivemq.com"
 PORT_BROKER = 8883
 USER_MQTT = "Alisultn" 
 PASS_MQTT = "parkir123"  
 TOPIK_LANGGANAN = "/parkirCerdas-Alisultn/lantai1/#"
 
-# --- Variabel Global untuk Data ---
 status_slot_terbaru = {}
 log_aktivitas = deque(maxlen=10) 
 data_lock = threading.Lock() 
 
-# --- Konfigurasi Aplikasi Web Flask ---
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Konfigurasi Login untuk Web
 monitor_USER = "Alisultn"
 monitor_PASS = "admin123"
 
-# --- PERUBAHAN DI SINI ---
-# Tambahkan argumen 'properti=None' untuk menyesuaikan dengan paho-mqtt v2
 def saat_terhubung(klien, data_pengguna, bendera, kode_hasil, properti=None):
     if kode_hasil == 0:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] [MONITOR] Terhubung ke Broker MQTT!")
@@ -54,7 +48,6 @@ def saat_pesan_diterima(klien, data_pengguna, pesan):
             print(f"[{datetime.now().strftime('%H:%M:%S')}] [MQTT-WEB] Pesan tidak valid diterima.")
 
 def jalankan_klien_mqtt():
-    # Menggunakan paho-mqtt v2.0.0, tambahkan parameter 'callback_api_version'
     klien = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=f"monitor-web-{random.randint(100,999)}")
     klien.on_connect = saat_terhubung
     klien.on_message = saat_pesan_diterima
@@ -65,7 +58,6 @@ def jalankan_klien_mqtt():
     klien.connect(ALAMAT_BROKER, PORT_BROKER, 60)
     klien.loop_forever()
 
-# --- Rute Aplikasi Web ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
